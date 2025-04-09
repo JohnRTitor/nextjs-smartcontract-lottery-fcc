@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAccount, useConnect, useDisconnect, useBalance } from "wagmi";
 import { injected } from "@wagmi/connectors";
+import { formatEther } from "viem";
 
 export default function CommonHeader() {
   const [hasMetaMask, setHasMetaMask] = useState(false);
@@ -33,7 +34,8 @@ export default function CommonHeader() {
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-700 truncate max-w-[120px]">{address}</span>
           <span className="text-xs text-gray-400">
-            {balance?.formatted} {balance?.symbol}
+            {balance?.value ? parseFloat(formatEther(balance.value)).toFixed(6) : "0.000000"}{" "}
+            {balance?.symbol}
           </span>
           <button
             onClick={() => disconnect()}
